@@ -1,0 +1,27 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>JoSo's DrinkDB</title>
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <h1>Welcome to JoSo's DrinkDB!</h1>
+        <h3>Drinks:</h3>
+
+        <ul>
+            <li th:each="drink : ${drinks}">
+                <a th:href="@{~/drinks/{id}(id=${drink.id})}">
+                    <span style="text-align: left" th:text="${drink.name}">Topic</span>
+                </a>
+            </li>
+        </ul>
+        
+        <br></br>
+        <a th:href="@{~/ingredients}">Add or remove ingredients</a>
+        <br></br>
+        <a th:href="@{~/drinks}">Add or remove a drink</a>
+
+    </body>
+</html>
