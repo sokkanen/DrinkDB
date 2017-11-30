@@ -44,10 +44,7 @@ public class DrinkIngredient implements Comparable<DrinkIngredient> {
 
     @Override
     public int compareTo(DrinkIngredient t) {
-        if (t.orderNumber < this.orderNumber) {
-            return t.orderNumber;
-        }
-        return this.orderNumber;
+        return this.orderNumber - t.orderNumber;
     }
 
 }

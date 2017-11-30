@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import omat.drinkkidb.domain.DrinkIngredient;
 
 public class DrinkIngredientDao implements Dao<DrinkIngredient, Map<Integer, Integer>> {
@@ -66,8 +67,18 @@ public class DrinkIngredientDao implements Dao<DrinkIngredient, Map<Integer, Int
         } catch (SQLException error) {
             System.out.println(error.getMessage());
         }
-        Collections.sort(diList);
-        return diList;
+
+        for (int i = 0; i < diList.size(); i++) {
+            System.out.println(diList.get(i).getOrderNumber());
+        }
+
+        List<DrinkIngredient> diSorted = diList.stream().sorted().collect(Collectors.toCollection(ArrayList::new));
+
+        for (int i = 0; i < diSorted.size(); i++) {
+            System.out.println(diSorted.get(i).getOrderNumber());
+        }
+
+        return diSorted;
     }
 
     @Override
@@ -84,11 +95,10 @@ public class DrinkIngredientDao implements Dao<DrinkIngredient, Map<Integer, Int
     public void remove(Map<Integer, Integer> key) throws SQLException {
         int drinkId = key.keySet().stream().findFirst().get();
         int ingredientId = key.values().stream().findFirst().get();
-        
+
         // Set undesired to -1
-        
         try {
-            
+
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM " + tableName + " WHERE drink_id = ? OR ingredient_id = ?");
             stmt.setInt(1, drinkId);
             stmt.setInt(2, ingredientId);
